@@ -14,15 +14,16 @@
                 <?php echo (isset($this->menu) ? $this->menu : ''); ?>
             </div>
             <div class="panel-body">
-              <div class="alert alert-warning alert-block">
+              <?php echo (isset($this->alert) ? $this->alert :''); ?>
+              <!-- <div class="alert alert-warning alert-block">
                 <h4>Recupere sua senha.</h4>
                 Um link de redefinição será enviado por e-mail. Por favor verifica a caixa de Spam.
-              </div>
-              <form class="form-horizontal">
+              </div> -->
+              <form action="<?php echo BASE; ?>recuperar/solicitar/" class="form-horizontal" method="post">
         <div class="form-group">
-          <label for="username" class="col-sm-3 control-label">Usuário:</label>
+          <label for="email" class="col-sm-3 control-label">E-mail:</label>
           <div class="col-sm-9">
-            <input type="username" name="username" class="form-control" id="username" placeholder="usuario">
+            <input type="email" name="email" class="form-control" id="email" placeholder="seuemail@dominio.com.br" value="<?php echo $this->request->post('email') ?>">
           </div>
         </div>
 
