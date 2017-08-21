@@ -12,7 +12,7 @@ class CadastroController extends \HXPHP\System\Controller
       true
     );
 
-    $this->auth->redirectCheck(true);//true = publico, false= privado(exige login);
+    // $this->auth->redirectCheck(true);//true = publico, false= privado(exige login);
   }
 
   public function cadastrarAction()

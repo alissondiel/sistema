@@ -44,5 +44,5 @@ class LoginController extends \HXPHP\System\Controller
   public function sairAction(){
     return $this->auth->logout();
   }
-  
+
 }

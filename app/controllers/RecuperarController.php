@@ -3,6 +3,7 @@ class RecuperarController extends \HXPHP\System\Controller
 {
   public function __construct($configs)
   {
+
     parent::__construct($configs);
     $this->load(
       'Services\Auth',
@@ -10,6 +11,7 @@ class RecuperarController extends \HXPHP\System\Controller
       $configs->auth->after_logout,
       true
     );
+
   $this->auth->redirectCheck(true);
   }
   public function solicitarAction()
@@ -80,10 +82,38 @@ class RecuperarController extends \HXPHP\System\Controller
   }
   public function redefinirAction($token)
   {
-    # code...
+
+      $validarToken = Recovery::validarToken($token);
+        $error = null;
+
+      if($validarToken->status === false){
+        $error = $this->messages->getByCode($validarToken->code);
+      }
+      else{
+        $this->view->setVar('token', $token);
+    }
+    if(!is_null($error)){
+      $this->view->setFile('blank');
+      $this->load('Helpers\Alert',$error);
+    }
   }
   public function alterarSenhaAction($token)
   {
-    # code...
+    $validarToken = Recovery::validarToken($token);
+
+    $error = null;
+
+    if($validarToken->status === false){
+      $this->view->setFile('blank');
+      $error = $this->messages->getByCode($validarToken->code);
+    }
+    else{
+    $password =  $this->request->post('password');
   }
+  if(!is_null($error)){
+
+    $this->load('Helpers\Alert',$error);
+  }
+  }
+
 }
