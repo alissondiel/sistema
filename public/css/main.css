@@ -1,0 +1,28 @@
+body{
+    background: #081E2D;
+    color: #fff;
+}
+.panel.panel-custom{
+    cursor: pointer;
+    background-clip: content-box;
+    background-color: #282828;
+    margin-top: 20%;
+}
+.panel.panel-custom:hover{
+    border-style: solid;
+}
+.panel.panel-custom .panel-heading img{
+    margin: 0 auto;
+    width: 250px;
+}
+.panel.panel-custom .panel-body{
+    background: #324450;
+    color: #fff;
+}
+.panel .title-panel {
+
+  font-size: 2rem;
+  font-weight: 700;
+  white-space: normal;
+  line-height: 70px;
+}

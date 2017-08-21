@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-custom">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-sm-4">
+                  <a id="logo" href="<?php echo BASE; ?>">
+                      <img class="img-responsive" src="<?php echo IMG; ?>divvina-157x128.png" alt="" style="max-width:70px;">
+                  </a> <br>
+                </div>
+                <div class="col-sm-8">
+                  <span class="title-panel">DIVVINA BOUTIQUE</span>
+                </div>
+                <?php echo (isset($this->menu) ? $this->menu : ''); ?>
+            </div>
+            <div class="panel-body">
+                <?php echo (isset($this->alert) ? $this->alert :''); ?>
+                <form action="<?php echo BASE; ?>login/logar/" class="form-horizontal" method="post">
+                <div class="form-group">
+                  <label for="username" class="col-sm-3 control-label">Usuário:</label>
+                  <div class="col-sm-9">
+                    <input type="username" name="username" class="form-control" id="username" placeholder="seuemail@email.com" value="<?php echo $this->request->post('username') ?>">
+                  </div>
+                </div>
+        <div class="form-group">
+          <label for="password" class="col-sm-3 control-label">Senha:</label>
+          <div class="col-sm-9">
+            <input type="password" name="password" class="form-control" id="password" placeholder="sua senha">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-10">
+            <button type="submit" class="btn btn-primary">Entrar</button>
+          </div>
+        </div>
+      </form>
+            </div>
+        </div>
+    </div>
+</div>
