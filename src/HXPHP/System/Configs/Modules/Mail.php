@@ -10,7 +10,7 @@ class Mail
     {
         $this->setFrom([
             'from' => 'DIVVINA BOUTIQUE',
-            'from_mail' => 'alissondiel@gmail.com.br'
+            'from_mail' => 'contato@alissondiel.com.br'
         ]);
         return $this;
     }
