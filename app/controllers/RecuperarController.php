@@ -4,6 +4,7 @@ class RecuperarController extends \HXPHP\System\Controller
   public function __construct($configs)
   {
 
+
     parent::__construct($configs);
     $this->load(
       'Services\Auth',
@@ -13,13 +14,16 @@ class RecuperarController extends \HXPHP\System\Controller
     );
 
   $this->auth->redirectCheck(true);
+
+  $this->load('Modules\Messages', 'password-recovery');
+  $this->messages->setBlock('alerts');
+
   }
   public function solicitarAction()
   {
     $this->view->setFile('index');
 
-    $this->load('Modules\Messages', 'password-recovery');
-    $this->messages->setBlock('alerts');
+
 
     $this->request->setCustomFilters(array(
       'email' => FILTER_VALIDATE_EMAIL
@@ -49,6 +53,7 @@ class RecuperarController extends \HXPHP\System\Controller
               $this->passwordrecovery->link
             )
           ));
+          // var_dump($message);
           $this->load('Services\Email');
 
             $envioDoEmail = $this->email->send(
@@ -82,7 +87,7 @@ class RecuperarController extends \HXPHP\System\Controller
   }
   public function redefinirAction($token)
   {
-
+    $this->view->setTitle("DIIVINA BOUTIQUE - Altere sua senha");
       $validarToken = Recovery::validarToken($token);
         $error = null;
 
@@ -90,7 +95,7 @@ class RecuperarController extends \HXPHP\System\Controller
         $error = $this->messages->getByCode($validarToken->code);
       }
       else{
-        $this->view->setVar('token', $token);
+        $this->view->setVar('token', $token); //PARAMETRO NO FORM DO TEMPLATE REDEFINIR
     }
     if(!is_null($error)){
       $this->view->setFile('blank');
@@ -99,6 +104,7 @@ class RecuperarController extends \HXPHP\System\Controller
   }
   public function alterarSenhaAction($token)
   {
+    $this->view->setFile('redefinir');
     $validarToken = Recovery::validarToken($token);
 
     $error = null;
@@ -108,12 +114,26 @@ class RecuperarController extends \HXPHP\System\Controller
       $error = $this->messages->getByCode($validarToken->code);
     }
     else{
-    $password =  $this->request->post('password');
-  }
-  if(!is_null($error)){
 
-    $this->load('Helpers\Alert',$error);
-  }
+        $password =  $this->request->post('password');
+
+        if(!is_null($password)){
+
+          $atualizarSenha = User::atualizarSenha($validarToken->user, $password);
+
+          if($atualizarSenha === true){
+            Recovery::limpar($validarToken->user->id);
+
+            $this->view->setPath('login')
+                        ->setFile('index');
+            $success = $this->messages->getByCode('senha-redefinida');
+            $this->load('Helpers\Alert',$success);
+          }
+        }
+    }
+    if(!is_null($error)){
+      $this->load('Helpers\Alert',$error);
+    }
   }
 
 }

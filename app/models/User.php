@@ -90,7 +90,7 @@ class User extends \HXPHP\System\Model
                       LoginAttempt::registrarTentativas($user->id);
                       if (LoginAttempt::tentativasRestantes($user->id) <= 3){
                         $callbackObj->code = 'tentativas-esgotando';
-                        $callbackObj->tentativas_restantes= LoginAttempt::tentativasRestantes($user->id);    
+                        $callbackObj->tentativas_restantes= LoginAttempt::tentativasRestantes($user->id);
                       }else{
                           $callbackObj->code = 'dados-incorretos';
                       }
@@ -108,4 +108,13 @@ class User extends \HXPHP\System\Model
           }
         return $callbackObj;
     }
+        public function atualizarSenha($user, $newPassword){
+            $user = self::find_by_id($user->id);
+            $password = \HXPHP\System\Tools::hashHX($newPassword);
+            $user->password = $password['password'];
+            $user->salt = $password['salt'];
+
+            return $user->save(false);
+        }
+
 }
